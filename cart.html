@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cakelicious</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+<header>
+  <nav>
+    <div class="logo">
+      <a href="index.html">Cakelicious</a>
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="product.html">Products</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html">Cart</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Keranjang Anda</h1>
+    <div id="cartItems">
+      <p>Loading cart...</p>
+    </div>
+    <div class="total-price" id="totalPrice"></div>
+    <button class="buy-button" onclick="checkout()">Beli Sekarang</button>
+  </section>
+</main>
+
+<footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Cakelicious</h3>
+        <p>Toko kue dan roti terbaik dengan cita rasa yang tak terlupakan</p>
+      </div>
+      <div class="footer-section">
+        <h3>Kontak</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Jl.Kue manis kayak kamu No.4 Jambi</p>
+        <p><i class="fas fa-phone"></i> (021) 123-4567</p>
+        <p><i class="fas fa-envelope"></i> Cakelicious_Unama@gmail.com</p>
+      </div>
+      <div class="footer-section">
+        <h3>Jam Buka</h3>
+        <p>Senin - Jumat: 07:00 - 21:00</p>
+        <p>Minggu LIBUR WOIIII!!</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Cakelicious. Dibuat Oleh 4 orang.</p>
+    </div>
+  </footer>
+
+<script>
+  function renderCart() {
+    const cartContainer = document.getElementById("cartItems");
+    const totalPriceElement = document.getElementById("totalPrice");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = "<p>Keranjang Anda saat ini kosong.</p>";
+      totalPriceElement.textContent = "";
+      document.querySelector('.buy-button').style.display = "none";
+      return;
+    }
+
+    cartContainer.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.classList.add("cart-item");
+      div.innerHTML = `
+        <img src="${item.image}" alt="${item.name}">
+        <p><strong>${item.name}</strong><br>${item.price}</p>
+        <button onclick="HapusFromCart(${index})">Hapus</button>
+      `;
+      cartContainer.appendChild(div);
+
+      total += parseFloat(item.price.replace('Rp', '').replace(/\./g, '').replace(',', '.'));
+    });
+
+    totalPriceElement.textContent = "Total: Rp " + total.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.querySelector('.buy-button').style.display = "inline-block";
+  }
+
+  function HapusFromCart(index) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  function checkout() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cart.length === 0) {
+      alert("Keranjang kosong. Tambahkan produk dulu.");
+      return;
+    }
+    const confirmBuy = confirm("Apakah Anda yakin ingin membeli produk dalam keranjang?");
+    if (confirmBuy) {
+      localStorage.removeItem("cart"); 
+      alert("Terima kasih! Pesanan Anda sedang diantar keealamat anda.");
+      renderCart();
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", renderCart);
+</script>
+
+</body>
+</html>

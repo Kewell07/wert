@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cakelicious</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="index.html">Cakelicious</a>
+      </div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="products-hero">
+      <h1>Produk Kami</h1>
+      <p>Pilih Kue & roti yang telah kami sediakan </p>
+    </section>
+
+    <div class="products" id="allProducts">
+      <div class="product-card">
+        <img src="1.png" alt="French Bread" />
+        <h3>French Bread</h3>
+        <p>Rp.20.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="13.png" alt="Easy French Macarons" />
+        <h3>Easy French Macarons</h3>
+        <p>Rp.28.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="3.png" alt="Rye Bread" />
+        <h3>Rye Bread</h3>
+        <p>Rp.35.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="4.png" alt="Sourdough bread" />
+        <h3>sourdough bread</h3>
+        <p>Rp.30.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="5.png" alt="Croissant" />
+        <h3>Croissant</h3>
+        <p>Rp.25.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="7.png" alt="Chocolate Cake" />
+        <h3>Chocolate Cake</h3>
+        <p>Rp.30.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="2.png" alt="Vanilla Bean Cake" />
+        <h3>Vanilla Bean Cake</h3>
+        <p>Rp.22.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="11.png" alt="Scrambled Egg Croissant" />
+        <h3>Scrambled Egg Croissant</h3>
+        <p>Rp.35.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="8.png " alt="Carrot Cake" />
+        <h3>Carrot Cake</h3>
+        <p>Rp.28.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+      <div class="product-card">
+        <img src="10.png" alt="Chocolate Chip Cookies" />
+        <h3>Chocolate Chip Cookies</h3>
+        <p>Rp.25.000</p>
+        <button>Tambahkan ke keranjang</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Cakelicious</h3>
+        <p>Toko kue dan roti terbaik dengan cita rasa yang tak terlupakan</p>
+      </div>
+      <div class="footer-section">
+        <h3>Kontak</h3>
+        <p><i class="fas fa-map-marker-alt"></i>Jl.Kue manis kayak kamu No.4 Jambi</p>
+        <p><i class="fas fa-phone"></i> (021) 123-4567</p>
+        <p><i class="fas fa-envelope"></i> Cakelicious_Unama@gmail.com</p>
+      </div>
+      <div class="footer-section">
+        <h3>Jam Buka</h3>
+        <p>Senin - Jumat: 07:00 - 21:00</p>
+        <p>Minggu LIBUR WOIIII!!</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Cakelicious. Dibuat Oleh 4 orang.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    function addToCart(product) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(product);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(product.name + " telah ditambahkan ke keranjang!");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const buttons = document.querySelectorAll(".product-card button");
+      buttons.forEach(button => {
+        button.addEventListener("click", function () {
+          const card = this.closest(".product-card");
+          const name = card.querySelector("h3").textContent;
+          const price = card.querySelector("p").textContent;
+          const image = card.querySelector("img").getAttribute("src");
+
+          const product = { name, price, image };
+          addToCart(product);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
